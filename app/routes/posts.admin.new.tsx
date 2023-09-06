@@ -2,6 +2,7 @@ import { redirect, type ActionArgs, json } from "@remix-run/node";
 import { Form, useActionData, useNavigation } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { createPost } from "~/models/post.server";
+import AdminIndex from "./posts.admin._index";
 
 export const action = async ({ request }: ActionArgs) => {
     // TODO: remove me
@@ -51,7 +52,7 @@ export default function NewPost() {
     navigation.state === "submitting"
   );
 
-  return (
+  return navigation.formData ? <AdminIndex /> : (
     <Form method="post">
       <p>
         <label>

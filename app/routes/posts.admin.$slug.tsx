@@ -4,6 +4,7 @@ import type { LoaderArgs , ActionArgs } from "@remix-run/node";
 import { Form, useActionData, useLoaderData, useNavigation } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { updatePost, getPost, deletePost } from "~/models/post.server";
+import AdminIndex from "./posts.admin._index";
 
 export const loader = async ({ params }:  LoaderArgs) => {
   invariant(params.slug, "params.slug is required");
@@ -72,8 +73,8 @@ export default function Post() {
   const isDeleting = isSubmitting && navigation.formData?.get('_action') === 'delete'
   
 
-  return (
-    <Form method="put" key={slug}>
+  return navigation.formData ? <AdminIndex /> :(
+    <Form method="post" key={slug}>
       <p>
         <label>
           Post Title:{" "}
@@ -132,7 +133,7 @@ export default function Post() {
         <button
           type="submit"
           name="_action"
-          value="update"
+          value="edit"
           className="rounded bg-blue-500 py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400 disabled:bg-blue-300"
           disabled={isEditing || isDeleting}
         >
