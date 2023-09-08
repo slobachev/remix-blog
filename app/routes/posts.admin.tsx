@@ -19,7 +19,7 @@ const getOptimisticPosts = (navigation: Navigation, posts: any[]) => {
       return posts.filter(p => p.slug !== slug)
     } else if (action === 'edit') {
       return posts.map(p => p.slug === slug ? { title, slug, markdown } : p)
-    } else {
+    } else if (action === 'create') {
       return [...posts, { title, slug, markdown }]
     }
   }
